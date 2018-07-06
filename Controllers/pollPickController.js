@@ -7,7 +7,7 @@ var pollPickController = function(Poll) {
     var patch = function(req,res){
 
         Poll.findByIdAndUpdate(req.poll._id,
-            {$push: {votes: req.body.votes[0]}},
+            {$push: {votes: req.body}},
             {safe: true, upsert: true, new: true},
             function(err, doc) {
                 if(err){

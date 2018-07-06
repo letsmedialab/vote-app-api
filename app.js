@@ -1,4 +1,5 @@
 var express = require('express'),
+    cors = require('cors'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser');
 
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 pollRouter = require('./Routes/pollRoutes')(Poll);
+
+app.use(cors());
 
 app.use('/api/polls', pollRouter);
 

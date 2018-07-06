@@ -4,12 +4,12 @@ var mongoose = require('mongoose'),
 var Vote = new Schema({
     user: String,
     votedOption: String,
-    votedOn: { type: String, default: Date.now }
+    votedOn: { type: Date, default: Date.now }
 });
 
 var pollModel = new Schema({
     title: String,
-    created: { type: String, default: Date.now },
+    createdOn: { type: Date, default: Date.now },
     options: [String],
     votes: {type: [Vote]}
 });
