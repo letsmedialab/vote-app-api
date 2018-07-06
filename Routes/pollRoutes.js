@@ -3,24 +3,11 @@ var express = require('express');
 var routes = function(Poll){
     var pollRouter = express.Router();
 
+    var pollController = require('../Controllers/pollController')(Poll);
+
     pollRouter.route('/')
-        .post(function(req, res){
-            var poll = new Poll(req.body);
-            poll.save();
-            res.status(201).send(poll);
-        })
-        .get(function(req, res){
-            var query = {};
-            if(req.query.title) {
-                query.title = req.query.title;
-            }
-            Poll.find(query, function(err, polls){
-                if(err)
-                    res.status(500).send(err);
-                else
-                    res.json(polls);
-            });
-        });
+        .post(pollController.post)
+        .get(pollController.get);
 
     pollRouter.use('/:pollId', function(req,res,next){
         Poll.findById(req.params.pollId, function(err, poll){
@@ -30,51 +17,17 @@ var routes = function(Poll){
                 req.poll = poll;
                 next();
             } else {
-                res.status(404).send('no book found');
+                res.status(404).send('poll not found');
             }
         });
     });
 
+    var pollPickController = require('../Controllers/pollPickController')(Poll);
+
     pollRouter.route('/:pollId')
-        .get(function(req, res){
-            res.json(req.poll);
-        })
-        .patch(function(req,res){
-
-            Poll.findByIdAndUpdate(req.poll._id,
-                {$push: {votes: req.body.votes[0]}},
-                {safe: true, upsert: true, new: true},
-                function(err, doc) {
-                    if(err){
-                        res.status(500).send(err);
-                    }else{
-                        res.json(doc);
-                    }
-                }
-            );
-
-            // Poll.update(
-            //     { "_id": req.params.pollId},
-            //     { "$push": { "votes": req.body.votes[0] } },
-            //     { new: true},
-            //     function (err, raw) {
-            //         if(err)
-            //             res.status(500).send(err);
-            //         else{
-            //             res.json(raw);
-            //         }
-            //     }
-            //  );
-        })
-        .delete(function(req, res) {
-            req.poll.remove(function(err){
-                if(err)
-                    res.status(500).send(err);
-                else{
-                    res.status(204).send('Removed');
-                }
-            });
-        });
+        .get(pollPickController.get)
+        .patch(pollPickController.patch)
+        .delete(pollPickController.remove);
 
     return pollRouter;
 };
