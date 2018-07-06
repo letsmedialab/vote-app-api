@@ -1,30 +1,24 @@
 var express = require('express'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser');
 
 var db = mongoose.connect('mongodb://localhost/pollAPI');
 
-var Poll = require('./models/pollModel');
+var Poll = require('./models/pollModel', {useNewUrlParser: true});
 
 var app = express();
 
 var port = process.env.PORT || 3000;
 
-var pollRouter = express.Router();
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
-pollRouter.route('/Polls')
-    .get(function(req, res){
-        Poll.find(function(err, polls){
-            if(err)
-                console.log(err);
-            else
-                res.json(polls);
-        });
-    });
+pollRouter = require('./Routes/pollRoutes')(Poll);
 
-app.use('/api', pollRouter);
+app.use('/api/polls', pollRouter);
 
 app.get('/', function(req, res){
-    res.send('welcome to Vote API!');
+    res.send('welcome to Polling!');
 });
 
 app.listen(port, function(){
