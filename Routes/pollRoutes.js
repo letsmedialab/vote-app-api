@@ -3,11 +3,13 @@ var express = require('express');
 var routes = function(Poll){
     var pollRouter = express.Router();
 
+    var verifyToken = require('./verifyToken');
+
     var pollController = require('../Controllers/pollController')(Poll);
 
     pollRouter.route('/')
-        .post(pollController.post)
-        .get(pollController.get);
+        .post(verifyToken, pollController.post)
+        .get(verifyToken, pollController.get);
 
     pollRouter.use('/:pollId', function(req,res,next){
         Poll.findById(req.params.pollId, function(err, poll){
@@ -25,9 +27,9 @@ var routes = function(Poll){
     var pollPickController = require('../Controllers/pollPickController')(Poll);
 
     pollRouter.route('/:pollId')
-        .get(pollPickController.get)
-        .patch(pollPickController.patch)
-        .delete(pollPickController.remove);
+        .get(verifyToken, pollPickController.get)
+        .patch(verifyToken, pollPickController.patch)
+        .delete(verifyToken, pollPickController.remove);
 
     return pollRouter;
 };
