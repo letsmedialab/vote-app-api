@@ -4,7 +4,8 @@ var express = require('express'),
     path = require('path');
     bodyParser = require('body-parser');
 
-var db = mongoose.connect('mongodb://localhost/pollAPI');
+//var db = mongoose.connect('mongodb://localhost/pollAPI');
+var db = mongoose.connect('mongodb://heroku_z9gmtdl7:7dveiq37clkm2ro9n4a7cbc237@ds229701.mlab.com:29701/heroku_z9gmtdl7');
 
 var User = require('./models/UserModel');
 
