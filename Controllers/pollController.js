@@ -1,6 +1,7 @@
 var pollController = function(Poll) {
 
     var post = function(req, res){
+        console.log(req);
         var poll = new Poll(req.body);
         poll.save();
         res.status(201).send(poll);

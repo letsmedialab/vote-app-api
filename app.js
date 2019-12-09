@@ -4,8 +4,11 @@ var express = require('express'),
     path = require('path');
     bodyParser = require('body-parser');
 
+mongoose.set('useUnifiedTopology', true);
+
 //var db = mongoose.connect('mongodb://localhost/pollAPI');
 var db = mongoose.connect('mongodb://heroku_z9gmtdl7:7dveiq37clkm2ro9n4a7cbc237@ds229701.mlab.com:29701/heroku_z9gmtdl7');
+//var db = mongoose.connect('mongodb+srv://vinkrish:Rykv7mQgC06LaJFd@votecluster-gacgn.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 var User = require('./models/UserModel');
 

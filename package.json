@@ -1,6 +1,6 @@
 {
   "name": "vote-app-api",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "RESTful Web Services for Vote App",
   "main": "index.js",
   "scripts": {
@@ -19,12 +19,17 @@
   "homepage": "https://github.com/vinkrish/vote-app-api#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.2.1",
-    "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.2.1"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.13"
+  },
+  "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2"
   }
 }
