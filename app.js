@@ -7,14 +7,26 @@ var express = require('express'),
 mongoose.set('useUnifiedTopology', true);
 
 //var db = mongoose.connect('mongodb://localhost/pollAPI');
-var db = mongoose.connect('mongodb://heroku_z9gmtdl7:7dveiq37clkm2ro9n4a7cbc237@ds229701.mlab.com:29701/heroku_z9gmtdl7');
-//var db = mongoose.connect('mongodb+srv://vinkrish:Rykv7mQgC06LaJFd@votecluster-gacgn.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+//var db = mongoose.connect('mongodb://heroku_z9gmtdl7:7dveiq37clkm2ro9n4a7cbc237@ds229701.mlab.com:29701/heroku_z9gmtdl7');
 
 var User = require('./models/UserModel');
 
-var Poll = require('./models/pollModel', {useNewUrlParser: true});
+var Poll = require('./models/pollModel');
 
 var app = express();
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+mongoose.connect('mongodb+srv://vinkrish:b5epju!ReENTxLh@votecluster-yqd54.mongodb.net/test?retryWrites=true&w=majority', 
+    {
+        useNewUrlParser: true
+    }, () => { console.log("we are connected")}).catch(err => console.log(err) );
+
+var db = mongoose.connection;
 
 app.set('view engine', 'html');
 
