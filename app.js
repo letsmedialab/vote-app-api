@@ -21,10 +21,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-mongoose.connect('mongodb+srv://vinkrish:b5epju!ReENTxLh@votecluster-yqd54.mongodb.net/test?retryWrites=true&w=majority', 
-    {
-        useNewUrlParser: true
-    }, () => { console.log("we are connected")}).catch(err => console.log(err) );
+mongoose.connect('mongodb+srv://vinkrish:b5epju!ReENTxLh@votecluster-yqd54.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }, () => { console.log("we are connected")}).catch(err => console.log(err) );
 
 var db = mongoose.connection;
 
@@ -45,12 +42,21 @@ pollRouter = require('./Routes/pollRoutes')(Poll);
 
 app.use('/api/polls', pollRouter);
 
-// Angular output folder
-app.use(express.static(path.join(__dirname, 'vote-app')));
+/*
+// React app
+app.use(express.static(path.join(__dirname, 'react-app')));
+app.get('/react', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'react-app', 'index.html'));
+});
 
-// Send all other requests to the Angular app
+// Angular app
+app.use(express.static(path.join(__dirname, 'angular-app')));
+app.get('/angular', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'angular-app', 'index.html'));
+});
+*/
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'vote-app/index.html'));
+    res.status(404).send("You are not allowed to be here!");
 });
 
 app.listen(port, function(){
